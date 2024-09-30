@@ -1,5 +1,19 @@
 version: 1
 indices:
+  index:
+    target: /query-index.json
+    exclude:
+      - '/drafts/**'
+    properties:
+      title:
+        select: head > meta[property="og:title"]
+        value: attribute(el, 'content')
+      robots:
+        select: head > meta[name="robots"]
+        value: attribute(el, 'content')
+      last-modified:
+        select: none
+        value: parseTimestamp(headers["last-modified"], "ddd, DD MMM YYYY hh:mm:ss GMT")
   enrichment:
     target: /enrichment/enrichment.json
     include:
