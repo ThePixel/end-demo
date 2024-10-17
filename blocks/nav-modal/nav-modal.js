@@ -7,9 +7,7 @@ import {
   loadCSS,
 } from '../../scripts/aem.js';
 
-const fragmentCache = {};
 let activeModal = null;
-let timeoutId;
 
 // This is not a traditional block, so there is no decorate function. Instead, links to
 // a */modals/* path  are automatically transformed into a modal. Other blocks can also use
