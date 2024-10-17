@@ -7,6 +7,7 @@ import {
   loadCSS,
 } from '../../scripts/aem.js';
 
+const fragmentCache = {};
 let activeModal = null;
 let timeoutId;
 
@@ -64,31 +65,44 @@ function closeModal(modal) {
 }
 
 export async function openNavModal(fragmentUrl) {
-  clearTimeout(timeoutId);
   const path = fragmentUrl.startsWith('http')
     ? new URL(fragmentUrl, window.location).pathname
     : fragmentUrl;
 
-  const fragment = await loadFragment(path);
+  let fragment;
+  if (fragmentCache[path]) {
+    fragment = fragmentCache[path];
+  } else {
+    fragment = await loadFragment(path);
+    fragmentCache[path] = { childNodes: [...fragment.childNodes] };
+  }
+
   const { block, showModal, closeModal } = await createModal(
-    fragment.childNodes
+    fragmentCache[path].childNodes
   );
   const modal = block.querySelector('.nav-modal');
   modal.fragmentUrl = fragmentUrl;
 
   showModal();
 
-  const handleClickOutside = (event) => {
-    if (!modal.contains(event.target)) {
+  // Optimization 1: Event delegation
+  const handleInteraction = (event) => {
+    const isClickOutside =
+      event.type === 'click' && !modal.contains(event.target);
+    const isMouseOut =
+      event.type === 'mouseout' && !modal.contains(event.relatedTarget);
+
+    if (isClickOutside || isMouseOut) {
       closeModal();
+      document.removeEventListener('click', handleInteraction);
+      modal.removeEventListener('mouseout', handleInteraction);
     }
   };
 
-  const handleMouseOut = (event) => {
-    if (!modal.contains(event.relatedTarget)) {
-      closeModal();
-    }
-  };
-  document.addEventListener('click', handleClickOutside);
-  modal.addEventListener('mouseout', handleMouseOut);
+  document.addEventListener('click', handleInteraction);
+  modal.removeEventListener('mouseout', handleInteraction);
+
+  requestAnimationFrame(() => {
+    modal.scrollTop = 0;
+  });
 }
