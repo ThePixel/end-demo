@@ -113,7 +113,7 @@ export async function openNavModal(fragmentUrl) {
   };
 
   document.addEventListener('click', handleInteraction);
-  modal.removeEventListener('mouseout', handleInteraction);
+  modal.addEventListener('mouseout', handleInteraction);
 
   requestAnimationFrame(() => {
     modal.scrollTop = 0;
