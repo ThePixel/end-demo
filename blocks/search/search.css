@@ -1,5 +1,5 @@
 /* Christopher search box */
-@import url(../search/search-custom-styles/search-article-styling.css);
+@import url(../search/search-custom-styles/search-custom-styling.css);
 
 .search .search-box {
     display: grid;

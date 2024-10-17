@@ -1,0 +1,6 @@
+.search-container:has(.article-search),
+.search-container:has(.brands-search)
+{
+    padding-bottom: 0;
+}
+

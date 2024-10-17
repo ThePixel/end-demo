@@ -315,7 +315,7 @@ button > u {
 
 /* buttons */
 main a.button:any-link,
-button.button:not(.form .button) {
+button.button {
   font: var(--type-button-2-font);
   letter-spacing: var(--type-button-2-letter-spacing);
   display: inline-block;

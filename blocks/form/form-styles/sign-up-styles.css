@@ -40,8 +40,8 @@
 
 .sign-up form .button
 {
-    background-color: rgb(244, 244, 244); /* Green */
-    border: none;
+    background-color: rgb(244, 244, 244);
+    border-radius: 0;
     color: rgb(153, 153, 153);
     padding: 15px 32px;
     text-align: center;
