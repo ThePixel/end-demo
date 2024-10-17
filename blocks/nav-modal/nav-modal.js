@@ -69,23 +69,36 @@ export async function openNavModal(fragmentUrl) {
     ? new URL(fragmentUrl, window.location).pathname
     : fragmentUrl;
 
-  let fragment;
-  if (fragmentCache[path]) {
-    fragment = fragmentCache[path];
+  let fragmentHtml;
+
+  const cachedFragment = localStorage.getItem(path);
+  const cacheExpiration = localStorage.getItem(`${path}-expiration`);
+
+  // Check if cache exists and is not expired (10 minutes)
+  if (cachedFragment && (!cacheExpiration || Date.now() < cacheExpiration)) {
+    fragmentHtml = cachedFragment;
   } else {
-    fragment = await loadFragment(path);
-    fragmentCache[path] = { childNodes: [...fragment.childNodes] };
+    const fragment = await loadFragment(path);
+    fragmentHtml = fragment.innerHTML;
+    localStorage.setItem(path, fragmentHtml);
+
+    // Set cache expiration to 10 minutes
+    const expirationTime = Date.now() + 10 * 60 * 1000;
+    localStorage.setItem(`${path}-expiration`, expirationTime);
   }
 
-  const { block, showModal, closeModal } = await createModal(
-    fragmentCache[path].childNodes
-  );
+  const tempDiv = document.createElement('div');
+  tempDiv.innerHTML = fragmentHtml;
+
+  const { block, showModal, closeModal } = await createModal([
+    ...tempDiv.childNodes,
+  ]);
+
   const modal = block.querySelector('.nav-modal');
   modal.fragmentUrl = fragmentUrl;
 
   showModal();
 
-  // Optimization 1: Event delegation
   const handleInteraction = (event) => {
     const isClickOutside =
       event.type === 'click' && !modal.contains(event.target);
