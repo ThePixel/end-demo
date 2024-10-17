@@ -82,7 +82,7 @@ export async function openNavModal(fragmentUrl) {
     fragmentHtml = fragment.innerHTML;
     localStorage.setItem(path, fragmentHtml);
 
-    // Set cache expiration to 10 minutes
+    // Cache expiration in 10 minutes
     const expirationTime = Date.now() + 10 * 60 * 1000;
     localStorage.setItem(`${path}-expiration`, expirationTime);
   }
