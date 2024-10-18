@@ -137,7 +137,8 @@
 }
 
 /* wording underneath the buttons */
-.article-section > div > div > table > tbody > tr > td:has(a):nth-child(1) em:last-child,td:has(a):nth-child(2) em:last-child
+.article-section > div > div > table > tbody > tr > td:has(a):nth-child(1) em:last-child,
+.article-section > div > div > table > tbody > tr > td:has(a):nth-child(2) em:last-child
 {
     opacity: 0.5;
     font-size: var(--sub-text-secondary-size);
@@ -151,7 +152,8 @@
     padding-bottom: 20px;
 }
 /* Side navigation links */
-.article-section > div > div > table:nth-child(1) a:any-link,table:nth-child(2) a:any-link
+.article-section > div > div > table:nth-child(1) a:any-link,
+.article-section > div > div > table:nth-child(2) a:any-link
 {
     text-decoration: none;
     line-height: var(--text-line-height);
@@ -160,7 +162,8 @@
     transition: color 0.3s ease-in-out;
 }
 
-.article-section > div > div > table:nth-child(1) a:hover,table:nth-child(2) a:hover
+.article-section > div > div > table:nth-child(1) a:hover,
+.article-section > div > div > table:nth-child(2) a:hover
 {
     text-decoration: none;
     line-height: var(--text-line-height);
