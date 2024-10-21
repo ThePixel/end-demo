@@ -30,9 +30,6 @@ export default function decorate(block) {
 
   //Christopher - Shipping
   changeShippingColor();
-
-  //brands page function
-  getBrandName();
 }
 
 // replacing string to add a span to be able to style the dates in color green 
@@ -49,25 +46,4 @@ function changeShippingColor()
           getShippingString[2].innerHTML = getShippingString[2].innerHTML.replace("Fri 2 Aug - Mon 5 Aug",`<span class="green-text">Fri 2 Aug - Mon 5 Aug</span>`); 
         }
     }
-}
-
-function getBrandName()
-{
-    const brands = document.querySelectorAll(`.brands-name-section ul li`);
-    const brandsImg = document.querySelector(`.brands-letters img`);
-
-    console.log(brandsImg.src);
-
-    brands.forEach((element) => {
-      element.addEventListener("mouseover", );
-    });
-}
-
-function getBrandNameImage(brand)
-{
-  const brandsImg = document.querySelector(`.brands-letters img`);
-  
-  brandsImg.src = ""
-
-  console.log(brandsImg.src);
 }
